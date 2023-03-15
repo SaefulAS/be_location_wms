@@ -18,13 +18,14 @@ app.use(morgan("dev"));
 
 
 // Routes
-app.use('/api', authMiddleware, locationRoutes);
+app.use('/api', locationRoutes);
 
+// tambahkan diatas setelah api , authMiddleware
 
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Server error' });
+  res.status(500).json({ message: process.env.ERROR500 });
 });
 
 module.exports = app;

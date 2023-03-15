@@ -9,7 +9,6 @@ Location.init(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      autoIncrement: true,
     },
     site: {
       type: DataTypes.STRING,

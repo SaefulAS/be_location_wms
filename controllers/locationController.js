@@ -1,4 +1,5 @@
 const Location = require("../models/location");
+const dotenv = require('dotenv'); // import dotenv
 
 exports.getLocationList = async (req, res) => {
   try {
@@ -6,7 +7,7 @@ exports.getLocationList = async (req, res) => {
     res.json(locations);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: process.env.ERROR500 });
   }
 };
 
@@ -14,12 +15,12 @@ exports.getLocationById = async (req, res) => {
   try {
     const location = await Location.findByPk(req.params.id);
     if (!location) {
-      return res.status(404).json({ message: "Location not found" });
+      return res.status(404).json({ message: process.env.ERROR404 });
     }
     res.json(location);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: process.env.ERROR500 });
   }
 };
 
@@ -36,7 +37,7 @@ exports.createLocation = async (req, res) => {
     res.status(201).json(location);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: process.env.ERROR500 });
   }
 };
 
@@ -45,7 +46,7 @@ exports.updateLocation = async (req, res) => {
     const { site, building, floor, rack, rack_level } = req.body;
     const location = await Location.findByPk(req.params.id);
     if (!location) {
-      return res.status(404).json({ message: "Location not found" });
+      return res.status(404).json({ message: process.env.ERROR404 });
     }
     location.site = site || location.site;
     location.building = building || location.building;
@@ -56,7 +57,7 @@ exports.updateLocation = async (req, res) => {
     res.json(location);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: process.env.ERROR500 });
   }
 };
 
@@ -67,7 +68,7 @@ exports.deleteLocation = async (req, res) => {
     const location = await Location.findByPk(idsToDelete);
 
     if (!location) {
-      return res.status(404).json({ message: "Location not found" });
+      return res.status(404).json({ message: process.env.ERROR404 });
     }
 
     await Location.destroy({
@@ -76,11 +77,11 @@ exports.deleteLocation = async (req, res) => {
       },
     });
 
-    res.json({ message: "Location deleted successfully" });
+    res.json({ message: process.env.LOCATION_DELETED_SUCCESS });
     
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: process.env.ERROR500 });
   }
 };
 
